@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
+class LaporanBahagianB extends Model
+{
+    use HasUuids;
+
+    protected $table = 'laporan_bahagian_bs';
+
+    protected $fillable = [
+        'laporan_id', 'pegawai_akhir_id', 'catatan_tambahan', 'masa_tandatangan','senarai_semak'
+    ];
+
+    protected $casts = [
+        'masa_tandatangan' => 'datetime',
+         'senarai_semak' => 'array',
+    ];
+
+    public function laporan()
+    {
+        return $this->belongsTo(LaporanBertugas::class, 'laporan_id');
+    }
+
+    public function pegawaiAkhir()
+    {
+        return $this->belongsTo(User::class, 'pegawai_akhir_id');
+    }
+
+}
