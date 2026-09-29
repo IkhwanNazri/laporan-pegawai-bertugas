@@ -14,14 +14,16 @@
 
 <div>
 
-    <h2 class="text-2xl font-bold text-white">{{ $ucapan }}! 👋</h2>
 
 
-    <p class="text-gray-300 mt-1 text-lg font-medium flex items-center" style="font-family: 'Montserrat', sans-serif;">
 
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+
+    <p class="text-purple-900 mt-1 text-lg font-medium flex " style="font-family: 'Montserrat', sans-serif;">
+
+       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 mr-2">
+  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
+</svg>
+
         {{ $waktuKL->format('h:i A | d M Y') }}
     </p>
 </div>

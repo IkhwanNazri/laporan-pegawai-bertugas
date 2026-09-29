@@ -15,7 +15,7 @@
                 <div class="md:col-span-1">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <h3 class="font-bold text-gray-800 mb-4">Tambah Bahagian Baru</h3>
-                        <form action="{{ route('bahagian.store') }}" method="POST" class="space-y-4">
+                        <form action="{{ route('admin.bahagian.store') }}" method="POST" class="space-y-4">
                             @csrf
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Kod Bahagian (Cth: BPM)</label>
@@ -49,7 +49,7 @@
                                         <td class="p-3 font-semibold text-purple-900">{{ $bahagian->kod_bahagian }}</td>
                                         <td class="p-3 text-gray-700">{{ $bahagian->nama_bahagian }}</td>
                                         <td class="p-3 text-right">
-                                            <x-delete-popup :action="route('bahagian.destroy', $bahagian->id)" />
+                                            <x-delete-popup :action="route('admin.bahagian.destroy', $bahagian->id)" />
 
                                         </td>
                                     </tr>

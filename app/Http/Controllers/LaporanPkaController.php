@@ -5,26 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\LaporanBertugas;
 use App\Models\Jadual;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
+
 
 class LaporanPkaController extends Controller
 {
-    // =========================================================
-    // 1. BAHAGIAN PENGURUSAN LAPORAN (PKA)
-    // =========================================================
+
 
     public function index()
     {
-        $query = LaporanBertugas::with(['jadual.bahagian', 'jadual.pegawai']);
-
-        if (auth()->user()->role !== 'superadmin') {
-            $query->whereHas('jadual', function ($q) {
-                $q->where('user_id', auth()->id())
-                  ->orWhere('pegawai_ganti_id', auth()->id());
-            });
-        }
-
-        $laporans = $query->orderBy('created_at', 'desc')->paginate(10);
+        $laporans = LaporanBertugas::with(['jadual.bahagian', 'jadual.pegawai'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('laporan.pka.index', compact('laporans'));
     }
@@ -86,17 +77,10 @@ class LaporanPkaController extends Controller
 
     public function senaraiPengesahan()
     {
-        $query = LaporanBertugas::with(['jadual.bahagian', 'jadual.pegawai'])
-            ->whereIn('status_pengesahan', ['dalam_proses', 'menunggu_pka']);
-
-        if (auth()->user()->role !== 'superadmin') {
-            $query->whereHas('jadual', function ($q) {
-                $q->where('user_id', auth()->id())
-                  ->orWhere('pegawai_ganti_id', auth()->id());
-            });
-        }
-
-        $laporans = $query->orderBy('created_at', 'desc')->paginate(10);
+        $laporans = LaporanBertugas::with(['jadual.bahagian', 'jadual.pegawai'])
+            ->whereIn('status_pengesahan', ['dalam_proses', 'menunggu_pka'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('pengesahan.index', compact('laporans'));
     }

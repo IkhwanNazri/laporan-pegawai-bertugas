@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+           <link rel="icon" type="image/png" href="{{ asset('asset/logo.PNG') }}">
 
-        <title>{{ config('app.name', 'Sistem Pegawai Bertugas KPN') }}</title>
+         <title>Laporan Pegawai Bertugas</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,19 +23,21 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body x-data="{ sidebarOpen: true, loading: true }"
-      x-init="setTimeout(() => loading = false, 150)"
+      x-init="setTimeout(() => loading = false, 450)"
       class="font-['Montserrat'] antialiased text-gray-900 bg-gray-100">
 
 
-    <div x-show="loading"
+    {{-- <div x-show="loading"
          x-transition.opacity.duration.300ms
          class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white backdrop-blur-sm">
         <div class="w-12 h-12 border-4 border-purple-200 border-t-purple-900 rounded-full animate-spin"></div>
         <p class="mt-4 text-sm font-semibold text-purple-900 animate-pulse">Memuatkan halaman...</p>
-    </div>
+    </div> --}}
 
+    <x-loading-logo />
 
     <div class="flex h-screen overflow-hidden bg-gray-100"
          x-show="!loading"
@@ -46,9 +49,7 @@
  <!-- Main Content Area -->
 <div class="flex flex-col flex-1 overflow-hidden relative">
 
-    <!-- ======================================================== -->
-    <!-- NOTIFIKASI FLOATING TOP-CENTER (TIDAK MENGHALANG BUTTON) -->
-    <!-- ======================================================== -->
+
     @if(Auth::user()->role === 'pegawai_keselamatan_aras' && Auth::user()->unreadNotifications->count() > 0)
         @php
             $latestNoti = Auth::user()->unreadNotifications->first();
@@ -138,9 +139,7 @@
         </div>
     @endif
 
-    <!-- ======================================================== -->
-    <!-- BAR HEADER UTAMA (BERSIH & KEMAS DI ATAS KANAN)            -->
-    <!-- ======================================================== -->
+
     <header class="hidden md:flex w-full pt-6 px-8 justify-end items-center gap-3 z-20">
 
         <!-- Profile Badge Nama User -->
@@ -152,7 +151,7 @@
             </span>
         </div>
 
-        <!-- Loceng Notifikasi (Dropdown) -->
+
         <div x-data="{ open: false }" class="relative">
             <button @click="open = !open" title="Notifikasi" class="relative p-2.5 text-gray-600 bg-white shadow-sm border border-gray-100 transition-all rounded-xl hover:bg-purple-50 hover:text-purple-700 focus:outline-none">
                 <x-heroicon-o-bell class="w-5 h-5" />

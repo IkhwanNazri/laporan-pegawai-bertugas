@@ -19,6 +19,12 @@
                     </div>
                 @endif
 
+               @if(session('error'))
+                <div class="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+                    {!! session('error') !!}
+                </div>
+            @endif
+
                 <form action="{{ route('pka.jadual.store') }}" method="POST" class="space-y-4">
                     @csrf
 

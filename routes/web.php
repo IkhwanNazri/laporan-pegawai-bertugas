@@ -98,6 +98,16 @@ Route::middleware(['auth', 'role:pegawai_keselamatan_aras'])
         Route::patch('/laporan/{id}/selesai', [LaporanPkaController::class, 'selesaikanLaporan'])->name('laporan.selesai');
 
 });
+Route::post('/pka/jadual/{id}/reminder', [JadualPkaController::class, 'reminder'])
+    ->name('pka.jadual.reminder');
+
+Route::delete('/pka/jadual/bulk-delete', [JadualPkaController::class, 'bulkDelete'])
+    ->name('pka.jadual.bulk-delete');
+
+Route::post('/pka/jadual/bulk-delete', [JadualPkaController::class, 'bulkDelete'])
+    ->name('pka.jadual.bulk-delete');
+Route::post('/pka/jadual/bulk-email', [JadualPkaController::class, 'bulkEmail'])
+    ->name('pka.jadual.bulk-email');
 
 
 // ==========================================
@@ -112,6 +122,9 @@ Route::middleware(['auth', 'role:penolong_pegawai_keselamatan_jabatan'])
         Route::post('/pengesahan/{id}', [PpkjPengesahanController::class, 'sahkan'])->name('pengesahan.sahkan');
 
 });
+
+
+
 
 
 // ==========================================

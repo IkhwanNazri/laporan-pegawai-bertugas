@@ -10,7 +10,7 @@ class Jadual extends Model
     use HasUuids;
 
     protected $fillable = [
-        'bahagian_id', 'user_id', 'tarikh', 'aras', 'pegawai_ganti_id', 'no_telefon','jenis'
+        'bahagian_id', 'user_id', 'tarikh', 'aras', 'pegawai_ganti_id', 'no_telefon','jenis','tarikh_mula','tarikh_tamat'
     ];
 
     public function bahagian()

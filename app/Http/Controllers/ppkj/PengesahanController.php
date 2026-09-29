@@ -11,9 +11,15 @@ class PengesahanController extends Controller
 
     public function index()
     {
+        $bahagianId = auth()->user()->bahagian_id;
+
+
         $laporans = LaporanBertugas::with(['jadual.bahagian', 'jadual.pegawai'])
-            // PPKJ hanya semak laporan yang dah disemak PKA dan dihantar kepadanya
-            ->whereIn('status_pengesahan', ['dihantar_ppkj', 'dihantar'])
+
+           ->where('status_pengesahan', 'dihantar_ppkj')
+           ->whereHas('jadual', function ($query) use ($bahagianId) {
+            $query->where('bahagian_id', $bahagianId);
+        })
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 

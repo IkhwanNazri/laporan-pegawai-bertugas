@@ -61,14 +61,14 @@
 
 
                                 <td class="p-3">
-    <td class="p-3">
+
     @if(empty($laporan->ulasan_ppkj))
 
         <form action="{{ route('ppkj.pengesahan.sahkan', $laporan->id) }}" method="POST" class="space-y-2">
             @csrf
             <textarea name="ulasan_ppkj" rows="2" class="w-full text-xs rounded-lg border-gray-300 p-2" placeholder="Masukkan ulasan PPKJ..." required></textarea>
             <button type="submit" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-700">
-                Hantar ke PKA
+                Sahkan Laporan
             </button>
         </form>
     @else
@@ -76,7 +76,7 @@
         <div class="text-xs text-gray-700 bg-gray-50 p-2 rounded border">
             <p class="font-semibold text-gray-500">Ulasan PPKJ:</p>
             <p class="italic">"{{ $laporan->ulasan_ppkj }}"</p>
-            <span class="text-green-600 font-bold text-[10px]">✓ Telah dihantar ke PKA</span>
+            <span class="text-green-600 font-bold text-[10px]">✓ Laporan Telah Disahkan</span>
         </div>
     @endif
 </td>

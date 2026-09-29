@@ -7,7 +7,7 @@
         <div class="relative flex w-full" :class="open ? 'justify-center' : 'flex-col items-center'">
             <div class="flex flex-col items-center justify-center px-2">
                 <a href="/">
-                    <img src="{{ asset('asset/logo.png') }}" alt="Logo Sistem" :class="open ? 'h-16 mb-2' : 'h-12 mb-4'" class="object-contain mx-auto transition-all duration-300">
+                    <img src="{{ asset('asset/logo.PNG') }}" alt="Logo Sistem" :class="open ? 'h-16 mb-2' : 'h-12 mb-4'" class="object-contain mx-auto transition-all duration-300">
                     <p x-show="open" x-transition.opacity.duration.300ms class="text-purple-900 font-semibold whitespace-nowrap text-center text-md" style="font-family: 'Poppins', sans-serif;">
                         Kementerian Perpaduan Negara
                     </p>
@@ -38,13 +38,13 @@
                 <p x-show="open" class="px-2 pt-4 text-xs font-semibold text-gray-400 uppercase">Pentadbiran</p>
 
 
-                <x-role-sidebar href="{{ route('pengguna.index') }}" :active="request()->routeIs('pengguna.*')" label=" Pengguna" shortLabel="Pengguna">
+                <x-role-sidebar href="{{ route('admin.pengguna.index') }}" :active="request()->routeIs('pengguna.*')" label=" Pengguna" shortLabel="Pengguna">
                    <x-heroicon-s-user-group class="w-6 h-6" />
 
                 </x-role-sidebar>
 
 
-                <x-role-sidebar href="{{ route('bahagian.index') }}" :active="request()->routeIs('bahagian.*')" label=" Bahagian" shortLabel="Bahagian">
+                <x-role-sidebar href="{{ route('admin.bahagian.index') }}" :active="request()->routeIs('bahagian.*')" label=" Bahagian" shortLabel="Bahagian">
                     <x-heroicon-s-building-office-2 class="w-6 h-6" />
 
                 </x-role-sidebar>

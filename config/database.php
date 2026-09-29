@@ -31,6 +31,25 @@ return [
 
     'connections' => [
 
+            'personel' => [
+            'driver' => 'mysql',
+            'host' => env('DB_PERSONEL_HOST', '127.0.0.1'),
+            'port' => env('DB_PERSONEL_PORT', '3306'),
+            'database' => env('DB_PERSONEL_DATABASE', 'personel'),
+            'username' => env('DB_PERSONEL_USERNAME', 'root'),
+            'password' => env('DB_PERSONEL_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+        ],
+
+
+
+
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
