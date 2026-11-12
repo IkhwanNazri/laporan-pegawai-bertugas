@@ -8,6 +8,7 @@ use App\Models\Bahagian;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\JadualBertugasMail;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class JadualPkaController extends Controller
 {
@@ -21,7 +22,10 @@ class JadualPkaController extends Controller
         ->orderBy('tarikh', 'asc')
         ->paginate(10);
 
-    return view('jadual.pka.index', compact('jaduals'));
+    // return view('jadual.pka.index', compact('jaduals'));
+     return Inertia::render('PKA/Jadual/Index', [
+        'jaduals' => $jaduals,
+    ]);
     }
 
        public function create()

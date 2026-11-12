@@ -14,12 +14,19 @@ use App\Http\Controllers\JadualUserController;
 use App\Http\Controllers\Ppkj\PengesahanController as PpkjPengesahanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Messages\MailMessage;
+use Inertia\Inertia;
 
 // ==========================================
 // LALUAN UMUM & AUTH
 // ==========================================
 Route::get('/', function () {
     return redirect()->route('login');
+});
+
+Route::get('/userDashboard', function () {
+    return Inertia::render('Dashboard/UserDashboard', [
+        'user' => auth()->user(),
+    ]);
 });
 
 Route::get('/dashboard', function () {
