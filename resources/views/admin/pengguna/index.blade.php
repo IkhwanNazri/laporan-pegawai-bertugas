@@ -8,7 +8,7 @@
                 </div>
 
                 <div class="pb-1">
-                    <a href="{{ route('pengguna.create') }}" class="inline-flex items-center justify-center px-5 py-2.5 mb-4 bg-purple-900 text-white text-sm font-medium rounded-full hover:bg-purple-800 transition-all shadow-md whitespace-nowrap">
+                    <a href="{{ route('admin.pengguna.create') }}" class="inline-flex items-center justify-center px-5 py-2.5 mb-4 bg-purple-900 text-white text-sm font-medium rounded-full hover:bg-purple-800 transition-all shadow-md whitespace-nowrap">
                         + Tambah Pengguna
                     </a>
                 </div>
@@ -47,7 +47,7 @@
                                 </td>
                                 <td class="p-3">{{ $user->bahagian->kod_bahagian ?? '-' }}</td>
                                 <td class="p-3 text-right">
-                                    <form action="{{ route('pengguna.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Pasti mahu padam pengguna ini?');">
+                                    <form action="{{ route('admin.pengguna.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Pasti mahu padam pengguna ini?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900 font-medium text-xs">Padam</button>

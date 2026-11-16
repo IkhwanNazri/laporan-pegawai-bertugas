@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Bahagian;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
 
@@ -14,14 +15,14 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('bahagian')->orderBy('created_at', 'desc')->paginate(10);
-        return view('admin.pengguna.index', compact('users'));
+        return Inertia::render('Admin/Pengguna/Index', ['users' => $users]);
     }
 
 
     public function create()
     {
         $bahagians = Bahagian::all();
-        return view('admin.pengguna.create', compact('bahagians'));
+        return Inertia::render('Admin/Pengguna/Create', ['bahagians' => $bahagians]);
     }
 
 
@@ -43,7 +44,7 @@ class UserController extends Controller
             'bahagian_id' => $request->bahagian_id,
         ]);
 
-        return redirect()->route('pengguna.index')->with('success', 'Pengguna baru berjaya ditambah.');
+        return redirect()->route('admin.pengguna.index')->with('success', 'Pengguna baru berjaya ditambah.');
     }
 
 

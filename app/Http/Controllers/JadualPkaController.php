@@ -34,7 +34,11 @@ class JadualPkaController extends Controller
 
         $pegawais = User::whereIn('role', ['pegawai_bertugas', 'pegawai_keselamatan_aras','penolong_pegawai_keselamatan_jabatan'])->get();
 
-        return view('jadual.pka.create', compact('bahagians', 'pegawais'));
+        return Inertia::render('PKA/Jadual/Form', [
+            'jenis' => 'harian',
+            'bahagians' => $bahagians,
+            'pegawais' => $pegawais,
+        ]);
     }
 
     // 3. Simpan Data Jadual Baru Ke Database
@@ -149,7 +153,11 @@ class JadualPkaController extends Controller
             ->orderBy('tarikh', 'desc')
             ->paginate(10);
 
-        return view('jadual.pka.harian', compact('jaduals', 'bahagians', 'pegawais'));
+        return Inertia::render('PKA/Jadual/Form', [
+            'jenis' => 'harian',
+            'bahagians' => $bahagians,
+            'pegawais' => $pegawais,
+        ]);
     }
 
 
@@ -163,12 +171,16 @@ class JadualPkaController extends Controller
             ->orderBy('tarikh', 'desc')
             ->paginate(10);
 
-        return view('jadual.pka.mingguan', compact('jaduals', 'bahagians', 'pegawais'));
+        return Inertia::render('PKA/Jadual/Form', [
+            'jenis' => 'mingguan',
+            'bahagians' => $bahagians,
+            'pegawais' => $pegawais,
+        ]);
     }
     public function pilihan()
 {
     // Halakan ke fail view pilihan anda
-    return view('jadual.pka.pilihan');
+    return Inertia::render('PKA/Jadual/Pilihan');
 }
 public function destroy(string $id)
 {

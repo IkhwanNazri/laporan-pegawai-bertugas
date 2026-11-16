@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Bahagian;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BahagianController extends Controller
 {
@@ -12,7 +13,7 @@ class BahagianController extends Controller
     public function index()
     {
         $bahagians = Bahagian::orderBy('created_at', 'desc')->paginate(10);
-        return view('admin.bahagian.index', compact('bahagians'));
+        return Inertia::render('Admin/Bahagian/Index', ['bahagians' => $bahagians]);
     }
 
 

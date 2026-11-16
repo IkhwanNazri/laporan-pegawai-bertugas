@@ -45,7 +45,7 @@ const urls = {
 
     pkaLaporan: '/pka/laporan',
 
-    emails: '/emails/preview',
+    emails: '/pka/email-preview',
 
     userJadual: '/user/jadual',
 
@@ -59,7 +59,7 @@ const urls = {
     <div :class="open
         ? 'w-128 rounded-none'
         : 'w-30 rounded-[2.5rem] mx-2 my-2 items-center'"
-        class="hidden md:flex flex-col h-full py-8 bg-white/80 shadow-lg backdrop-filter backdrop-blur-md border border-white/50 transition-all duration-300 ease-in-out">
+        class="hidden md:flex flex-col h-full py-8 bg-white/80 shadow-lg backdrop-filter backdrop-blur-md border border-white/50 transition-all duration-300 ease-in-out shrink-0">
 
         <!-- Logo -->
 
@@ -94,9 +94,9 @@ const urls = {
                 <button @click="open = !open" :class="open ? 'absolute bottom-20 right-0' : ''"
                     class="p-2 group hover:opacity-75 transition-opacity" title="Toggle Sidebar">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="text-purple-800  transition-all duration-300"
-                        :class="open ? 'w-6 h-6 rotate-180' : 'w-10 h-10 '">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke-width="0.8"
+                        class="text-purple-800 transition-all duration-300 hover:rotate-180 group-hover:fill-transparent group-hover:stroke-purple-800"
+                        :class="open ? 'w-8 h-8 rotate-180' : 'w-10 h-10 '">
                         <path fill-rule="evenodd"
                             d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z"
                             clip-rule="evenodd" />

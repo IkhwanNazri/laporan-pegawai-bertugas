@@ -7,6 +7,7 @@ use App\Models\Jadual;
 use App\Models\User;
 use App\Notifications\PkaSystemNotification;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -29,7 +30,7 @@ class LaporanUserController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('laporan.user.index', compact('laporans'));
+        return Inertia::render('Laporan/User/Index', ['laporans' => $laporans]);
     }
 
     public function create(Request $request)
@@ -77,7 +78,11 @@ class LaporanUserController extends Controller
         $this->authorize('create', [LaporanBertugas::class, $jadual]);
     }
 
-    return view('laporan.user.laporanuser', compact('jadual'));
+    return Inertia::render('Laporan/User/Create', [
+        'jadual' => $jadual,
+        'bahagians' => \App\Models\Bahagian::orderBy('kod_bahagian')->get(['id', 'kod_bahagian', 'nama_bahagian']),
+        'pegawais' => User::where('role', 'pegawai_bertugas')->orderBy('name')->get(['id', 'name', 'bahagian_id']),
+    ]);
     }
 
     public function store(Request $request)
@@ -122,6 +127,21 @@ class LaporanUserController extends Controller
                 $jadual->bahagian_id
 
             );
+
+        // Maklumkan PKA jika pegawai terakhir ditetapkan (pengesahan akan ditambah kemudian)
+        if ($request->filled('nama_pegawai_terakhir')) {
+            $namaUser = Auth::user()->name;
+            foreach (User::where('role', 'pegawai_keselamatan_aras')->get() as $pka) {
+                $pka->notify(new PkaSystemNotification(
+                    'Pegawai Terakhir Ditetapkan',
+                    'Pegawai ' . $namaUser . ' menetapkan ' . $request->nama_pegawai_terakhir . ' sebagai pegawai terakhir meninggalkan pejabat (' . $kodLaporan . ').',
+                    route('pka.laporan.index'),
+                    $kodLaporan,
+                    $namaUser,
+                    'baharu'
+                ));
+            }
+        }
 
         return redirect()->route('user.laporan.index')->with('success', 'Laporan bertugas berjaya dihantar dan sedang menunggu pengesahan.');
     }
@@ -185,36 +205,42 @@ class LaporanUserController extends Controller
 
 
 
-//     public function updateUlasan(Request $request, string $id)
-//     {
-//         $request->validate([
-//             'ulasan' => 'required|string',
-//         ]);
 
-//         $laporan = LaporanBertugas::findOrFail($id);
-//         $this->authorize('update', $laporan);
-
-//         // Kemas kini ulasan, tukar status tindakan PKA, dan jadikan status pengesahan 'selesai'
-//         $laporan->update([
-//             'ulasan' => $request->ulasan,
-//             'status_tindakan_pka' => 'Sudah Bertindak',
-//             'status_pengesahan' => 'selesai',
-//         ]);
-
-//         // HANTAR NOTIFIKASI KEPADA PKA BAHAWA USER DAH KEMASKINI & SELESAI
-//       $this->hantarNotifikasiKePka(
-//     'Laporan Telah Diselesaikan',
-//     'Pegawai ' . Auth::user()->name . ' telah melengkapkan ulasan tindakan. Status terkini: SELESAI.',
-//     route('pka.laporan.index'),
-//     $laporan->kod_laporan,
-//     'selesai'
-// );
-//         return redirect()->back()->with('success', 'Ulasan berjaya dikemas kini dan laporan telah diselesaikan sepenuhnya.');
-//     }
 
     /**
      * Fungsi Helper untuk menghantar notifikasi kepada semua PKA
      */
+    public function updateUlasan(Request $request, string $id)
+    {
+        $request->validate([
+            'ulasan' => 'required|string',
+        ]);
+
+        $laporan = LaporanBertugas::findOrFail($id);
+        $this->authorize('update', $laporan);
+
+        $laporan->update([
+            'ulasan' => $request->ulasan,
+            'status_tindakan_pka' => 'Sudah Bertindak',
+            'status_pengesahan' => 'selesai',
+        ]);
+
+        // Notifikasi kepada semua PKA
+        $namaUser = Auth::user()->name ?? 'Pegawai Bertugas';
+        foreach (User::where('role', 'pegawai_keselamatan_aras')->get() as $pka) {
+            $pka->notify(new PkaSystemNotification(
+                'Laporan Telah Diselesaikan',
+                'Pegawai ' . $namaUser . ' telah melengkapkan ulasan tindakan. Status terkini: SELESAI.',
+                route('pka.laporan.index'),
+                $laporan->kod_laporan,
+                $namaUser,
+                'selesai'
+            ));
+        }
+
+        return redirect()->back()->with('success', 'Ulasan berjaya dikemas kini dan laporan telah diselesaikan sepenuhnya.');
+    }
+
   private function hantarNotifikasiKePpkj(string $tajuk, string $mesej, $url = '#', $kodLaporan = '-', $kategori = 'baharu',$bahagianId = null)
     {
         $pkkjUsers = User::where('role', 'penolong_pegawai_keselamatan_jabatan')

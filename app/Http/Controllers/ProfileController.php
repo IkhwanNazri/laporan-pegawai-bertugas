@@ -14,10 +14,11 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request): \Inertia\Response
     {
-        return view('profile.edit', [
+        return \Inertia\Inertia::render('Profile/Edit', [
             'user' => $request->user(),
+            'status' => session('status'),
         ]);
     }
 
@@ -40,7 +41,7 @@ class ProfileController extends Controller
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
@@ -55,6 +56,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        // Reload penuh supaya page login (Blade) dibuka dengan betul
+        return \Inertia\Inertia::location(url('/'));
     }
 }

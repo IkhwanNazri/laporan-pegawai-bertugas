@@ -29,22 +29,19 @@ Route::get('/userDashboard', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    $jadual = \App\Models\Jadual::query()
-                ->where(function($query) {
-                    $query->where('user_id', auth()->id())
-                          ->orWhere('pegawai_ganti_id', auth()->id());
-                })
-                ->whereDate('tarikh', \Carbon\Carbon::today())
-                ->first();
-
-    return view('dashboard', compact('jadual'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::resource('jadual', JadualPkaController::class)->except(['index']);
+        Route::post('/notifications/mark-as-read', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    })->name('notifications.read');
 });
 
 
@@ -83,12 +80,13 @@ Route::middleware(['auth', 'role:pegawai_keselamatan_aras'])
         Route::get('/jadual/harian', [JadualPkaController::class, 'harian'])->name('jadual.harian');
         Route::get('/jadual/mingguan', [JadualPkaController::class, 'mingguan'])->name('jadual.mingguan');
          Route::get('/jadual/pilihan', [JadualPkaController::class, 'pilihan'])->name('jadual.pilihan');
-
         Route::resource('jadual', JadualPkaController::class)->except(['index']);
-        Route::post('/notifications/mark-as-read', function () {
-        auth()->user()->unreadNotifications->markAsRead();
-        return redirect()->back();
-    })->name('notifications.read');
+
+    //     Route::resource('jadual', JadualPkaController::class)->except(['index']);
+    //     Route::post('/notifications/mark-as-read', function () {
+    //     auth()->user()->unreadNotifications->markAsRead();
+    //     return redirect()->back();
+    // })->name('notifications.read');
 
         // view laporan
         Route::get('/laporan', [LaporanPkaController::class, 'index'])->name('laporan.index');
@@ -149,9 +147,18 @@ Route::middleware(['auth', 'role:superadmin'])
 
 Route::get('/pka/email-preview', function () {
     // Tarik semua notifikasi sebenar dari database untuk user yang sedang login
-    $senaraiEmail = Auth::user()->notifications;
+    $user = Auth::user();
 
-    return view('pka.email_dashboard', compact('senaraiEmail'));
+    return Inertia::render('PKA/Email', [
+        'emails' => $user->notifications->map(fn ($n) => [
+            'id' => $n->id,
+            'tajuk' => $n->data['tajuk'] ?? 'Pemberitahuan',
+            'mesej' => $n->data['mesej'] ?? 'Sila semak butiran e-mel...',
+            'unread' => $n->unread(),
+            'masa' => $n->created_at->diffForHumans(null, true, true),
+        ]),
+        'unread' => $user->unreadNotifications->count(),
+    ]);
 })->name('emails.preview')->middleware('auth');
 
 // 2. Laluan Iframe (Paparkan kandungan e-mel berdasarkan ID Notifikasi)

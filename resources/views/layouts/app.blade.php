@@ -181,7 +181,7 @@
                         <h4 class="text-xs font-bold uppercase tracking-wider">Notifikasi Sistem</h4>
                     </div>
                     @if(Auth::user()->role === 'pegawai_keselamatan_aras' && Auth::user()->unreadNotifications->count() > 0)
-                        <form action="{{ route('pka.notifications.read') }}" method="POST" class="m-0">
+                        <form action="{{ route('notifications.read') }}" method="POST" class="m-0">
                             @csrf
                             <button type="submit" class="text-[10px] bg-white/10 hover:bg-white/20 text-purple-100 px-2.5 py-1 rounded-full transition font-semibold">
                               <x-heroicon-o-envelope-open class="w-6 h-6"></x-heroicon-o-envelope-open>

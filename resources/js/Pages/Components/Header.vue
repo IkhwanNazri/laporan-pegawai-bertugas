@@ -76,14 +76,47 @@ const notificationTime = (notification) => {
 
 <template>
 
-    <header class="hidden md:flex shrink-0 w-full pt-6 px-8 pb-4 justify-end items-center gap-3 z-20">
+    <header class="hidden md:flex  w-full pt-6 px-8 pb-4 justify-end items-center gap-3 z-20 ">
+
+
+        <!-- version tab -->
+
+        <div class="flex items-center p-1 bg-white border border-gray-200 rounded-xl gap-1 space-x-4">
+
+            <label class="cursor-pointer">
+                <input type="radio" name="version" value="v1" class="peer sr-only" checked>
+                <span
+                    class="block px-6 py-2 text-xs font-semibold rounded-lg text-gray-500 transition-all
+                     peer-checked:bg-white peer-checked:text-purple-700 peer-checked:shadow-lg peer-checked:border-gray-200 peer-checked:border">
+                    V1
+                </span>
+            </label>
+
+            <label class="cursor-pointer">
+                <input type="radio" name="version" value="v2" class="peer sr-only">
+                <span
+                    class="block px-6 py-2 text-xs font-semibold rounded-lg text-gray-500 transition-all
+                     peer-checked:bg-white peer-checked:text-purple-700 peer-checked:shadow-lg peer-checked:border-gray-200 peer-checked:border">
+                    V2
+                </span>
+            </label>
+
+            <label class="cursor-pointer">
+                <input type="radio" name="version" value="v3" class="peer sr-only">
+                <span
+                    class="block px-6 py-2 text-xs font-semibold rounded-lg text-gray-500 transition-all
+                     peer-checked:bg-white peer-checked:text-purple-700 peer-checked:shadow-lg peer-checked:border-gray-200 peer-checked:border">
+                    V3
+                </span>
+            </label>
+
+        </div>
 
         <!-- Profile Badge Nama User -->
-
         <div
-            class="py-2 px-4 bg-white shadow-sm border border-gray-100 rounded-xl text-sm text-gray-700 flex items-center font-medium">
+            class="py-2 px-4 bg-white shadow-sm border border-gray-200 rounded-xl text-sm text-gray-700 flex items-center font-medium">
 
-            <span class="text-gray-900 font-bold">
+            <span class="text-gray-900 font-semibold">
                 {{ user?.name }}
             </span>
 
@@ -104,7 +137,7 @@ const notificationTime = (notification) => {
         <div class="relative">
 
             <button @click="notificationOpen = !notificationOpen" title="Notifikasi"
-                class="relative p-2.5 text-gray-600 bg-white shadow-sm border border-gray-100 transition-all rounded-xl hover:bg-purple-50 hover:text-purple-700 focus:outline-none">
+                class="relative p-2.5 text-gray-600 bg-white shadow-sm border border-gray-200 transition-all rounded-xl hover:bg-purple-50 hover:text-purple-700 focus:outline-none">
 
                 <!-- Bell -->
 
@@ -130,7 +163,7 @@ const notificationTime = (notification) => {
 
 
             <div v-if="notificationOpen"
-                class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden">
 
                 <!-- Header -->
 
@@ -225,7 +258,7 @@ const notificationTime = (notification) => {
         <!-- PROFILE -->
 
         <a :href="profileUrl" title="Profil"
-            class="p-2.5 text-gray-600 bg-white shadow-sm border border-gray-100 transition-all rounded-xl hover:bg-purple-50 hover:text-purple-700">
+            class="p-2.5 text-gray-600 bg-white shadow-sm border border-gray-200 transition-all rounded-xl hover:bg-purple-50 hover:text-purple-700">
 
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -242,7 +275,7 @@ const notificationTime = (notification) => {
             <input type="hidden" name="_token" :value="csrfToken">
 
             <button type="submit" title="Log Keluar"
-                class="p-2.5 text-red-500 bg-white shadow-sm border border-gray-100 transition-all rounded-xl hover:bg-red-50 hover:text-red-700">
+                class="p-2.5 text-red-500 bg-white shadow-sm border border-gray-200 transition-all rounded-xl hover:bg-red-50 hover:text-red-700">
 
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

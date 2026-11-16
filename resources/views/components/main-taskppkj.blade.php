@@ -489,11 +489,10 @@
                             name="jadual_id"
                             :value="selectedReport?.jadual_id">
 
-                        <button
-                            type="submit"
-                            class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded-lg">
-                            Pergi Pengesahan
-                        </button>
+                       <a href="{{ route('ppkj.pengesahan.index') }}"
+   class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded-lg">
+    Pergi Pengesahan
+</a>
 
                     </form>
 

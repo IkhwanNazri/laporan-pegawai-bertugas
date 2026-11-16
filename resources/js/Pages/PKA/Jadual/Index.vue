@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Header from '../../Components/Header.vue'
+import AppLayout from '../../../Layouts/AppLayout.vue'
 
 const props = defineProps({
     jaduals: {
@@ -173,12 +173,8 @@ const csrfToken = document
 </script>
 
 <template>
-    <div class="py-8 min-h-screen bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:20px_20px]">
-        <Sidebar :user="user" />
-
-        <div class="max-w-full px-4 sm:px-6 lg:px-8 space-y-6">
-            <Header :user="user" :notifications="notifications" :unread-count="unreadCount" :profile-url="profileUrl"
-                :logout-url="logoutUrl" :notifications-read-url="notificationsReadUrl" />
+    <AppLayout>
+        <div class="space-y-6">
 
             <!-- HEADER -->
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -505,8 +501,6 @@ const csrfToken = document
                 </div>
 
             </div>
-
         </div>
-
-    </div>
+    </AppLayout>
 </template>

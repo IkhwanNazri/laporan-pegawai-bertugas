@@ -1,4 +1,5 @@
 <script setup>
+import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -142,7 +143,7 @@ function tutupMenu() {
 
 function hantarReminder(jadual) {
 
-    window.location.href = `/pka/jadual/${jadual.id}/reminder`
+    router.post(`/pka/jadual/${jadual.id}/reminder`, {}, { preserveScroll: true })
 
 }
 </script>

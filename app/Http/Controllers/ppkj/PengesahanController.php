@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ppkj;
 use App\Http\Controllers\Controller;
 use App\Models\LaporanBertugas;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PengesahanController extends Controller
 {
@@ -23,7 +24,7 @@ class PengesahanController extends Controller
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
-        return view('ppkj.pengesahan.index', compact('laporans'));
+        return Inertia::render('PPKJ/Pengesahan', ['laporans' => $laporans]);
     }
 
 

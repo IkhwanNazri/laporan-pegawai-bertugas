@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadual;
-use App\Models\Bahagian;
-use App\Models\User;
+// use App\Models\Bahagian;
+// use App\Models\User;
 
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class JadualUserController extends Controller
 {
@@ -20,14 +21,14 @@ class JadualUserController extends Controller
         $userId = Auth::id();
 
         // Hanya paparkan jadual di mana pegawai ini terlibat (sebagai pegawai atau pengganti)
-        $jaduals = Jadual::with(['bahagian', 'pegawai', 'pegawaiGanti'])
+        $jaduals = Jadual::with(['bahagian', 'pegawai', 'pegawaiGanti','laporan'])
             ->where('user_id', $userId)
             ->orWhere('pegawai_ganti_id', $userId)
             ->orderBy('tarikh', 'desc')
             ->paginate(10);
 
         // Halakan ke fail resources/views/user/jadual/index.blade.php
-        return view('jadual.user.index', compact('jaduals'));
+        return Inertia::render('Jadual/User/Index',['jaduals'=>$jaduals]);
     }
     //   public function create()
     // {

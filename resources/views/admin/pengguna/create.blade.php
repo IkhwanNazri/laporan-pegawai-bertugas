@@ -2,10 +2,10 @@
     <div class="py-8 min-h-screen bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:20px_20px]">
         <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
 
-            <x-page-header title="Tambah Pengguna Baru" :breadcrumbs="['Admin' => '#', 'Pengguna' => route('pengguna.index'), 'Tambah' => '#']" />
+            <x-page-header title="Tambah Pengguna Baru" :breadcrumbs="['Admin' => '#', 'Pengguna' => route('admin.pengguna.index'), 'Tambah' => '#']" />
 
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mt-4">
-                <form action="{{ route('pengguna.store') }}" method="POST" class="space-y-4">
+                <form action="{{ route('admin.pengguna.store') }}" method="POST" class="space-y-4">
                     @csrf
 
                     <div>
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="flex justify-end gap-2 pt-4">
-                        <a href="{{ route('pengguna.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm">Batal</a>
+                        <a href="{{ route('admin.pengguna.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm">Batal</a>
                         <button type="submit" class="px-4 py-2 bg-purple-900 text-white rounded-lg text-sm hover:bg-purple-800 transition">Simpan Pengguna</button>
                     </div>
                 </form>

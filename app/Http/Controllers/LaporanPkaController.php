@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LaporanBertugas;
 use App\Models\Jadual;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 
 class LaporanPkaController extends Controller
@@ -17,7 +18,7 @@ class LaporanPkaController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('laporan.pka.index', compact('laporans'));
+        return Inertia::render('Laporan/PKA/Index', ['laporans' => $laporans]);
     }
 
     public function create(Request $request)
